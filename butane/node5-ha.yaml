@@ -1,0 +1,22 @@
+variant: flatcar
+version: 1.1.0
+ignition:
+  config:
+    merge:
+      - local: ign/32_base-ha-join.ign
+storage:
+  files:
+    - path: /etc/hostname
+      overwrite: true
+      contents:
+        inline: node5-worker
+    - path: /etc/systemd/network/00-eth0.network
+      contents:
+        inline: |
+          [Match]
+          Name=eth0
+
+          [Network]
+          Address=192.168.122.35/24
+          Gateway=192.168.122.1
+          DNS=192.168.122.1
